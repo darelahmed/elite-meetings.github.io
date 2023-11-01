@@ -59,6 +59,33 @@
     z-index: 1;
 }
 
+@media (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container .meeting-container {
+        width: 100%;
+    }
+
+    .container .form-container {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .meeting-container .remote-container {
+        padding-left: 0;
+    }
+
+    .player {
+        width: 250px;
+        height: 150px;
+        margin-bottom: 40px;
+    }
+}
+
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
     .container {
