@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.19.2.js"></script>
+    <link rel="stylesheet" href="css/create.css">
+    <title>Elite Meet</title>
+</head>
+<body>
+    <div class="container">
+        <div class="btn-leave">
+            <button type="submit" id="Leave" class="btn btn-outline-danger" style="display: none;">Leave</button>
+        </div>
+        <div class="form-container">
+            <div class="image-content">
+                <img src="images/create_vc.jpg" alt="#">
+            </div>
+            <form action="">
+                <input type="text" name="appId" id="appId" class="form-control m-1 shadow" placeholder="Enter Agora App ID" value="f5537f8d69ae46038d0ae78811c80a00" hidden>
+                <input type="text" name="channel" id="channel" class="form-control m-1 shadow" placeholder="Input Channel Code">
+                <button type="submit" id="Join" class="btn btn-outline-success mt-4">Create Room</button>
+                <button type="submit" id="shareRoomInvitation" class="btn btn-outline-info mt-4">Share Room</button>
+            </form>
+        </div>
+        <!-- <div class="form-container">
+            <h2>Input Form</h2>
+            <form action="">
+                <input type="text" name="appId" id="appId" class="form-control m-1 shadow"
+                    placeholder="Enter Agora App ID" value="f5537f8d69ae46038d0ae78811c80a00" readonly>
+                <input type="text" name="channel" id="channel" class="form-control m-1 shadow"
+                    placeholder="Enter Agora Channel">
+                <input type="text" name="token" id="token" class="form-control m-1 shadow"
+                    placeholder="Agora Token (Optional)">
+                <div class="row d-flex justify-content-around mt-3" id="bottomBox">
+                    <input type="submit" value="Join" id="Join"
+                        class="btn btn-outline-primary form-control w-25 btn-sm shadow-sm col-6 d-flex">
+                    <input type="submit" value="Leave" id="Leave" class="btn btn-outline-danger form-control w-25 btn-sm shadow-sm col-6 d-flex">
+                </div>
+            </form>
+        </div> -->
+        <div class="meeting-container">
+            <div class="remote-container">
+                <div id="remote-user" class="player"></div>
+            </div>
+            <div class="local-container">
+                <div id="local-user" class="player">
+                    <p id="local-user-stream"></p>
+                    <div class="UI_Buttons d-flex justify-content-end position-relative">
+                        <div class="d-flex position-absolute mt-2">
+                            <i class="fa videoCameraIcon p-2 mx-1 bg-primary rounded shadow fa-video-camera" aria-hidden="true"></i>
+                            <i class="fa microPhoneIcon p-2 mx-1 bg-primary rounded shadow fa-microphone" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/helper.js"></script>
+    <script src="js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

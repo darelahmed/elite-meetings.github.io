@@ -46,12 +46,18 @@ $('#Join').click(async function (e) {
         }
         
         await join();
+        $('.form-container').hide();
+        $('#Leave').show();
     } catch (error) {
         console.error(error);
     } finally {
         $('#Leave').attr('disabled', false);
         $('#Join').attr('disabled', true);
     }
+});
+
+$('#shareRoomInvitation').click(function (e) {
+    alert("Coming Soon, stay tune!");
 });
 
 // Fungsi untuk memeriksa validitas App ID
@@ -96,6 +102,7 @@ async function subscribe(user, mediaType) {
 }
 
 $('#Leave').click(async function (e) {
+    $('.form-container').show();
     leave();
 });
 
@@ -117,6 +124,7 @@ async function leave() {
     $('#local-user-stream').text('');
     console.log('Client succeed to leave.');
     hideUIButtons();
+    window.location.reload();
 }
 
 function handleUserPublished(user, mediaType) {

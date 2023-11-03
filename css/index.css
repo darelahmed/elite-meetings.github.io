@@ -1,115 +1,95 @@
-/* Default styles for larger screens */
 .container {
     width: 100%;
     height: 100vh;
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-}
-
-.container .meeting-container {
-    width: 75%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.container .form-container {
-    width: 25%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     background-color: #fff;
-    z-index: 1;
 }
 
-.meeting-container .remote-container {
-    width: 100%;
-    height: 100vh;
+.form-container {
+    width: 50%;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    align-items: start;
-    padding-left: 200px;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
-    /* background-color: aqua; */
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
 }
 
-.meeting-container .local-container {
+.content {
     width: 100%;
-    height: 50vh;
+    max-width: 1000px; /* Adjust max-width as needed */
+    height: 400px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+}
+
+.content .image-content img {
+    width: 100%;
+    max-width: 380px; /* Adjust max-width as needed */
+    height: auto;
+}
+
+.content .title h2 {
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: 400;
+    color: #000;
+}
+
+.content .content-action form {
+    width: 100%;
+    max-width: 250px; /* Adjust max-width as needed */
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 }
 
-.player {
-    width: 250px;
-    height: 150px;
-    margin-bottom: 40px;
+.image-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
 }
 
-.fa {
-    font-size: 20px !important;
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-width: 100%; /* Ensure the image doesn't overflow its container */
+    object-fit: cover;
 }
 
-.UI_Buttons {
-    z-index: 1;
-}
-
-@media (max-width: 1200px) {
+/* Media query for 1200px resolution */
+@media screen and (max-width: 1000px) {
     .container {
         flex-direction: column;
-        align-items: center;
     }
-
-    .container .meeting-container {
+    
+    .form-container, .image-container {
         width: 100%;
     }
 
-    .container .form-container {
-        width: 100%;
-        padding-top: 50px;
-        padding-bottom: 50px;
+    .image-container img {
+        /* hide this */
+        display: none;
     }
 
-    .meeting-container .remote-container {
-        padding-left: 0;
-    }
-
-    .player {
-        width: 250px;
-        height: 150px;
-        margin-bottom: 40px;
+    .content {
+        margin-top: 150px;
     }
 }
 
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .container .meeting-container {
-        width: 100%;
-    }
-
-    .container .form-container {
-        width: 100%;
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-
-    .meeting-container .remote-container {
-        padding-left: 0;
-    }
-
-    .player {
-        width: 150px;
-        height: 100px;
-        margin-bottom: 40px;
+/* Media query for 728px resolution */
+@media screen and (max-width: 728px) {
+    .content {
+        margin-top: 150px;
+        height: auto;
     }
 }
