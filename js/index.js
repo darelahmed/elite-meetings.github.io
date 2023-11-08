@@ -1,3 +1,6 @@
+var screenClient = null;
+var localScreenTrack = null;
+
 var config = {
     mode: 'rtc',
     codec: 'vp8',
@@ -5,7 +8,7 @@ var config = {
 
 var client = AgoraRTC.createClient(config);
 var options = {
-    appId: null,//heres appId "f5537f8d69ae46038d0ae78811c80a00" without use token
+    appId: "f5537f8d69ae46038d0ae78811c80a00",//heres appId "f5537f8d69ae46038d0ae78811c80a00"
     channel: null,
     token: null,
     uid: null,
@@ -31,23 +34,38 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 $('#Leave').attr('disabled', true);
 
-// Tambahkan event click untuk tombol Join
 $('#Join').click(async function (e) {
-    e.preventDefault(); // Mencegah pengiriman form
+    e.preventDefault(); // Prevent form submission
+
     try {
         options.appId = $('#appId').val();
         options.channel = $('#channel').val();
-        options.token = $('#token').val();
         
-        // Validasi App ID
+        // Validate App ID
         if (!isValidAppId(options.appId)) {
-            console.error('Invalid App ID. It should be a valid string within the specified length limits and containing only ASCII characters.');
+            console.error('Invalid App ID.');
             return;
         }
-        
+
+        // Fetch the token from your token server
+        const tokenServerURL = 'https://agora-node-tokenserver-elite-meeting.darelahmedgalen.repl.co/access_token?channelName=' + options.channel;
+        const response = await fetch(tokenServerURL);
+        if (!response.ok) {
+            console.error('Failed to fetch token from the server.');
+            return;
+        }
+
+        const tokenData = await response.json();
+        options.token = tokenData.token;
+
+        // Join the channel with the obtained token
         await join();
+
+        // Hide the form and show necessary buttons
         $('.form-container').hide();
         $('#Leave').show();
+        $('#startScreenShare').show();
+        $('#startRecording').show();
     } catch (error) {
         console.error(error);
     } finally {
@@ -58,6 +76,43 @@ $('#Join').click(async function (e) {
 
 $('#shareRoomInvitation').click(function (e) {
     alert("Coming Soon, stay tune!");
+});
+
+$('#startScreenShare').click(async function (e) {
+    e.preventDefault();
+    try {
+        const screenClientConfig = { mode: 'rtc', codec: 'vp8' };
+        screenClient = AgoraRTC.createClient(screenClientConfig);
+
+        screenClient.on('user-published', handleUserPublished);
+        screenClient.on('user-unpublished', handleUserUnPublished);
+
+        // Bergabung dengan channel yang sama dengan panggilan video
+        await screenClient.join(options.appId, options.channel, options.token || null);
+
+        localScreenTrack = await AgoraRTC.createScreenVideoTrack({
+            encoderConfig: '720p_1',
+        });
+        await screenClient.publish([localScreenTrack]);
+
+        // Sembunyikan tombol "Start Screen Sharing" dan tampilkan "Stop Screen Sharing"
+        $('#startScreenShare').hide();
+        $('#stopScreenShare').show();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+// Tambahkan event click untuk tombol "Stop Screen Sharing"
+$('#stopScreenShare').click(async function (e) {
+    e.preventDefault();
+    if (localScreenTrack) {
+        localScreenTrack.stop();
+        localScreenTrack.close();
+        screenClient.unpublish([localScreenTrack]);
+        $('#startScreenShare').show();
+        $('#stopScreenShare').hide();
+    }
 });
 
 // Fungsi untuk memeriksa validitas App ID
@@ -137,4 +192,34 @@ function handleUserUnPublished(user) {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
+}
+
+// Function to turn on the remote user's camera
+function turnOnRemoteUserCamera(uid) {
+    const remoteUser = remoteUsers[uid];
+    if (remoteUser) {
+        // Check if the remote user is still in the channel
+        if (remoteUser.hasVideo) {
+            remoteUser.videoTrack.setEnabled(true);
+        } else {
+            console.error('Remote user does not have video track.');
+        }
+    } else {
+        console.error('Remote user is not in the channel.');
+    }
+}
+
+// Function to turn off the remote user's camera
+function turnOffRemoteUserCamera(uid) {
+    const remoteUser = remoteUsers[uid];
+    if (remoteUser) {
+        // Check if the remote user is still in the channel
+        if (remoteUser.hasVideo) {
+            remoteUser.videoTrack.setEnabled(false);
+        } else {
+            console.error('Remote user does not have video track.');
+        }
+    } else {
+        console.error('Remote user is not in the channel.');
+    }
 }
